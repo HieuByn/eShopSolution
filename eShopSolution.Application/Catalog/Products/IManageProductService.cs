@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Application.Catalog.Products.Dtos;
+using eShopSolution.Application.Catalog.Products.Dtos.Manage;
 using eShopSolution.Application.Dtos;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,12 @@ namespace eShopSolution.Application.Catalog.Products
     public interface IManageProductService
     {
         Task<int> Create(ProductCreateRequestDto request);
-        Task<int> Update(ProductEditRequestDto request);
+        Task<int> Update(ProductUpdateRequestDto request);
         Task<int> Delete(int productId);
-        Task<List<ProductViewModelDto>> GetAll();
-        Task<PagedViewModel<ProductViewModelDto>> GetAllPaging(string keyword, int pageIndex, int pageSize);
+        Task<bool> UpdatePrice(int productId, decimal newPrice);
+        Task<bool> UpdateStock(int productId, int addedQuantity);
+        Task AddViewcount(int productId);
+        //Task<List<ProductViewModelDto>> GetAll();
+        Task<PagedResultDto<ProductViewModelDto>> GetAllPaging(GetProductPagingRequest request);
     }
 }
