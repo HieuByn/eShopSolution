@@ -16,7 +16,7 @@ namespace eShopSolution.Application.Catalog.Products
             _context = context;
         }
 
-        public async Task<List<ProductViewModelDto>> GetAll()
+        public async Task<List<ProductViewModelDto>> GetAll(string languageId)
         {
             var query = from p in _context.Products
 
@@ -28,6 +28,7 @@ namespace eShopSolution.Application.Catalog.Products
 
                         join c in _context.Categories
                         on pic.CategoryId equals c.Id
+                        where pt.LanguageId == languageId
                         select new { p, pt, pic };
 
             var data = await query.Select(x => new ProductViewModelDto()
@@ -61,6 +62,8 @@ namespace eShopSolution.Application.Catalog.Products
 
                         join c in _context.Categories
                         on pic.CategoryId equals c.Id
+
+                        where pt.LanguageId == request.LanguageId
                         select new { p, pt, pic };
 
 

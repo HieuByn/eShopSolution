@@ -15,6 +15,7 @@ namespace eShopSolution.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int addedQuantity);
         Task AddViewcount(int productId);
         //Task<List<ProductViewModelDto>> GetAll();
+        Task<ProductViewModelDto> GetById(int productId, string languageId);
         Task<PagedResultDto<ProductViewModelDto>> GetAllPaging(GetManageProductPagingRequest request);
         Task<int> AddImage(int productId, List<IFormFile> files);
         Task<int> RemoveImage(int imageId);
