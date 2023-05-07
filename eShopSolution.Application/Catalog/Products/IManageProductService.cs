@@ -1,5 +1,4 @@
 ﻿using eShopSolution.ViewModels.Catalog.Products;
-using eShopSolution.ViewModels.Catalog.Products.Manage;
 using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace eShopSolution.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int addedQuantity);
         Task AddViewcount(int productId);
         //Task<List<ProductViewModelDto>> GetAll();
-        Task<PagedResultDto<ProductViewModelDto>> GetAllPaging(GetProductPagingRequest request);
+        Task<PagedResultDto<ProductViewModelDto>> GetAllPaging(GetManageProductPagingRequest request);
         Task<int> AddImage(int productId, List<IFormFile> files);
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, string caption, bool isDefault);
