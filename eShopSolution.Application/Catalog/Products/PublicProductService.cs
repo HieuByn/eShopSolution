@@ -51,7 +51,7 @@ namespace eShopSolution.Application.Catalog.Products
         //    return data;
         //}
 
-        public async Task<PagedResultDto<ProductViewModelDto>> GetAllByCategoryId(string LanguageId, GetPublicProductPagingRequest request)
+        public async Task<PagedResultDto<ProductViewModelDto>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
         {
             var query = from p in _context.Products
 
@@ -64,7 +64,7 @@ namespace eShopSolution.Application.Catalog.Products
                         join c in _context.Categories
                         on pic.CategoryId equals c.Id
 
-                        where pt.LanguageId == LanguageId
+                        where pt.LanguageId == languageId
                         select new { p, pt, pic };
 
 
