@@ -12,6 +12,7 @@ namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -35,10 +36,11 @@ namespace eShopSolution.BackendApi.Controllers
             {
                 return BadRequest("Tên đăng nhập hoặc mật khẩu không đúng");
             }
+
             return Ok(resultToken);
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -53,6 +55,13 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest("Đăng nhập không thành công!");
             }
             return Ok();
+        }
+
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var products = await _userService.GetUsersPaging(request);
+            return Ok(products);
         }
     }
 }
