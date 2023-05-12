@@ -35,7 +35,7 @@ namespace eShopSolution.BackendApi.Controllers
             {
                 return BadRequest("Tên đăng nhập hoặc mật khẩu không đúng");
             }
-            return Ok(new { token = resultToken });
+            return Ok(resultToken);
         }
 
         [HttpPost("register")]
