@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class BaseController : Controller
     {
         public override void OnActionExecuting(ActionExecutingContext context)
