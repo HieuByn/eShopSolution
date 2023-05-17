@@ -5,6 +5,15 @@
     ViewData["Title"] = "Danh sách người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
 <div class="container-fluid">
     <h1 class="mt-4">Danh sách người dùng</h1>
     <ol class="breadcrumb mb-4">
@@ -17,7 +26,7 @@
             <form asp-action="Index" method="get">
                 <div class="row">
                     <div class="col-md-10">
-                        <input type="text" value="@ViewBag.Keyword" class="form-control rounded col-md" placeholder="Tìm kiếm" name="keyword"/>
+                        <input type="text" value="@ViewBag.Keyword" class="form-control rounded col-md" placeholder="Tìm kiếm theo tài khoản, SĐT" name="keyword" />
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-outline-primary">Tìm</button>
@@ -28,6 +37,12 @@
         </div>
 
         <div class="card-body">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -70,9 +85,9 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id=item.Id  }) |
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id  })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                                 </td>
                             </tr>
                         }
