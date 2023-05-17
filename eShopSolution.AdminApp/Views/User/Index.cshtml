@@ -11,9 +11,20 @@
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
         <li class="breadcrumb-item active">Danh sách người dùng</li>
     </ol>
-    <div class="card mb-4">
+    <div class="card mb-12">
         <div class="card-header">
-            <a class="btn btn-success" asp-action="Create" asp-controller="User">Thêm mới</a>
+            <a class="btn btn-success" asp-action="Create" asp-controller="User" style="margin-bottom: 10px;">Thêm mới</a>
+            <form asp-action="Index" method="get">
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" value="@ViewBag.Keyword" class="form-control rounded col-md" placeholder="Tìm kiếm" name="keyword"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-outline-primary">Tìm</button>
+                        <button type="button" class="btn btn-dark" onclick="window.location.href='/User/Index'">Reset</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div class="card-body">
