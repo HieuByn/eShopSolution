@@ -62,6 +62,9 @@
                             <th>
                                 Email
                             </th>
+                            <th>
+                                Quyền
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -85,9 +88,13 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    @Html.DisplayFor(modelItem => item.Roles)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) | 
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                    @Html.ActionLink("Phân quyền", "RoleAssign", new { id = item.Id })
                                 </td>
                             </tr>
                         }

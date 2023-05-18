@@ -31,6 +31,37 @@ namespace eShopSolution.Application.System.Users
             _config = config;
         }
 
+        public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null) return new ApiErrorResult<bool>("Tài khoản không tồn tại, vui lòng thử lại");
+
+            //Lấy ra danh sách tên các role có selected = false
+            var removedRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
+            foreach (var roleName in removedRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, roleName) == true)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, roleName);
+                }
+            }
+
+            //Lấy ra danh sách tên các role có selected = true
+            var addRoles = request.Roles.Where(x => x.Selected).Select(x => x.Name).ToList();
+            foreach (var roleName in addRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, roleName) == false)
+                {
+                    await _userManager.AddToRoleAsync(user, roleName);
+                }
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
+            return new ApiSuccessResult<bool>();
+
+        }
+
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
@@ -84,6 +115,7 @@ namespace eShopSolution.Application.System.Users
             {
                 return new ApiErrorResult<UserVm>("User không tồn tại");
             }
+            var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserVm()
             {
                 Email = user.Email,
@@ -92,7 +124,8 @@ namespace eShopSolution.Application.System.Users
                 UserName = user.UserName,
                 Dob = user.Dob,
                 Id = user.Id,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Roles = roles
             };
             return new ApiSuccessResult<UserVm>(userVm);
         }
