@@ -16,14 +16,14 @@ namespace eShopSolution.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int addedQuantity);
         Task AddViewcount(int productId);
         //Task<List<ProductViewModelDto>> GetAll();
-        Task<ProductViewModelDto> GetById(int productId, string languageId);
-        Task<PagedResultDto<ProductViewModelDto>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<ProductVm> GetById(int productId, string languageId);
+        Task<PagedResultDto<ProductVm>> GetAllPaging(GetManageProductPagingRequest request);
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
         Task<ProductImageViewModel> GetImageById(int imageId);
         Task<List<ProductImageViewModel>> GetListImages(int productId);
-        Task<PagedResultDto<ProductViewModelDto>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+        Task<PagedResultDto<ProductVm>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
 
     }
 }
