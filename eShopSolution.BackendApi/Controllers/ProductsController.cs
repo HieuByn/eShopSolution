@@ -42,6 +42,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Creat([FromForm] ProductCreateRequestDto request)
         {
             if(!ModelState.IsValid)

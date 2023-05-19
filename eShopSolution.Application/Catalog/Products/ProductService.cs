@@ -78,7 +78,7 @@ namespace eShopSolution.Application.Catalog.Products
                 }
             };
             //save image
-            if(request.ThumbnailImage != null)
+            if (request.ThumbnailImage != null)
             {
                 product.ProductImages = new List<ProductImage>()
                 {
@@ -104,8 +104,8 @@ namespace eShopSolution.Application.Catalog.Products
             var product = await _context.Products.FindAsync(productId);
             if (product == null) throw new EShopException($"Không thể tìm thấy sản phẩm: {product.Id} !");
 
-            var images =  _context.ProductImages.Where(i => i.IsDefault == true && i.ProductId == productId);
-            foreach( var image in images)
+            var images = _context.ProductImages.Where(i => i.IsDefault == true && i.ProductId == productId);
+            foreach (var image in images)
             {
                 _storageService.DeleteFileAsync(image.ImagePath);
             }
@@ -130,9 +130,13 @@ namespace eShopSolution.Application.Catalog.Products
 
                         join pic in _context.ProductInCategories
                         on p.Id equals pic.ProductId
+                        into picJoined
+                        from pic in picJoined.DefaultIfEmpty()
 
                         join c in _context.Categories
                         on pic.CategoryId equals c.Id
+                        into cJoined
+                        from c in cJoined.DefaultIfEmpty()
 
                         where pt.LanguageId == request.LanguageId
                         select new { p, pt, pic };
@@ -141,7 +145,7 @@ namespace eShopSolution.Application.Catalog.Products
             if (!string.IsNullOrWhiteSpace(request.Keyword))
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
 
-            if(request.CategoryIds != null && request.CategoryIds.Count > 0)
+            if (request.CategoryIds != null && request.CategoryIds.Count > 0)
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
             }
@@ -151,7 +155,8 @@ namespace eShopSolution.Application.Catalog.Products
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                             .Take(request.PageSize)
-                            .Select(x => new ProductVm() { 
+                            .Select(x => new ProductVm()
+                            {
                                 Id = x.p.Id,
                                 Name = x.pt.Name,
                                 DateCreated = x.p.DateCreated,
@@ -260,7 +265,7 @@ namespace eShopSolution.Application.Catalog.Products
         public async Task<int> Update(ProductUpdateRequestDto request)
         {
             var product = await _context.Products.FindAsync(request.Id);
-            var productTranslation =await  _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id && x.LanguageId == request.LanguageId);
+            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == request.Id && x.LanguageId == request.LanguageId);
             if (product == null || productTranslation == null) throw new EShopException($"Không thể tìm thấy sản phẩm: {request.Id} !");
 
             productTranslation.Name = request.Name;
@@ -273,7 +278,7 @@ namespace eShopSolution.Application.Catalog.Products
             if (request.ThumbnailImage != null)
             {
                 var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
-                if(thumbnailImage != null)
+                if (thumbnailImage != null)
                 {
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
                     thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
