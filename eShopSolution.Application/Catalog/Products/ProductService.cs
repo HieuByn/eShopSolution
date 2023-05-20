@@ -169,7 +169,7 @@ namespace eShopSolution.Application.Catalog.Products
                                 SeoDescription = x.pt.SeoDescription,
                                 SeoTitle = x.pt.SeoTitle,
                                 Stock = x.p.Stock,
-                                ViewCount = x.p.ViewCount
+                                ViewCount = x.p.ViewCount,
                             }).ToListAsync();
 
             var PagedResult = new PagedResultDto<ProductVm>()
@@ -211,7 +211,7 @@ namespace eShopSolution.Application.Catalog.Products
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
-                //Categories = categories,
+                Categories = categories,
                 //ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };
             return productViewModel;
@@ -380,6 +380,32 @@ namespace eShopSolution.Application.Catalog.Products
                 Items = data,
             };
             return PagedResult;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            var user = await _context.Products.FindAsync(id);
+            if (user == null) return new ApiErrorResult<bool>($"Sản phẩm với {id}không tồn tại, vui lòng thử lại");
+
+            foreach (var category in request.Categories)
+            {
+                var productInCategory = await _context.ProductInCategories.FirstOrDefaultAsync(x => x.ProductId == id && x.CategoryId.ToString() == (category.Id));
+                if (productInCategory != null && category.Selected == false)
+                {
+                    _context.ProductInCategories.Remove(productInCategory);
+                } else if (productInCategory == null && category.Selected == true)
+                {
+                    _context.ProductInCategories.Add(new ProductInCategory() 
+                    { 
+                        ProductId = id,
+                        CategoryId = int.Parse(category.Id)
+                    });
+
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<bool>();
         }
     }
 }
