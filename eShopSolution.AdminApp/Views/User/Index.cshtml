@@ -88,7 +88,7 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Roles)
+                                    @*@Html.DisplayFor(modelItem => string.Join(", ", item.Roles))*@
                                 </td>
                                 <td>
                                     @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
