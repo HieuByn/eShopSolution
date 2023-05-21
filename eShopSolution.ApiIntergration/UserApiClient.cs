@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntergration
 {
     public class UserApiClient : IUserApiClient
     {
@@ -69,7 +69,7 @@ namespace eShopSolution.AdminApp.Services
         }
 
         public async Task<ApiResult<PagedResultDto<UserVm>>> GetUsersPagings(GetUserPagingRequest request)
-        
+
         {
             var client = _httpClientFactory.CreateClient();
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");

@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntergration
 {
     public class BaseApiClient
     {
@@ -26,7 +26,7 @@ namespace eShopSolution.AdminApp.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        protected async Task<TResponse> GetAsync<TResponse> (string url)
+        protected async Task<TResponse> GetAsync<TResponse>(string url)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();

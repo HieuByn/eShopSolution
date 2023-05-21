@@ -14,9 +14,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Services
+namespace eShopSolution.ApiIntergration
 {
-    public class ProductApiClient : BaseApiClient ,IProductApiClient
+    public class ProductApiClient : BaseApiClient, IProductApiClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -62,8 +62,8 @@ namespace eShopSolution.AdminApp.Services
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var requestContent = new MultipartFormDataContent();
-            
-            if(request.ThumbnailImage != null)
+
+            if (request.ThumbnailImage != null)
             {
                 byte[] data;
                 using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
@@ -98,7 +98,7 @@ namespace eShopSolution.AdminApp.Services
 
         public async Task<PagedResultDto<ProductVm>> GetPagings(GetManageProductPagingRequest request)
         {
-            var data =  await GetAsync<PagedResultDto<ProductVm>>(
+            var data = await GetAsync<PagedResultDto<ProductVm>>(
                 $"/api/products/paging?pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}" +
                 $"&keyword={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryId}");
