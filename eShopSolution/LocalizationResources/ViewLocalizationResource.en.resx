@@ -143,4 +143,8 @@
   <data name="Vietnamese" xml:space="preserve">
     <value>Vietnamese</value>
   </data>
+  <data name="VIEW" xml:space="preserve">
+    <value>VIEW</value>
+    <comment>/Home/Index</comment>
+  </data>
 </root>

@@ -407,5 +407,51 @@ namespace eShopSolution.Application.Catalog.Products
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
         }
+
+        public async Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take)
+        {
+            var query = from p in _context.Products
+
+                        join pt in _context.ProductTranslations
+                        on p.Id equals pt.ProductId
+
+                        join pic in _context.ProductInCategories
+                        on p.Id equals pic.ProductId
+                        into picJoined
+                        from pic in picJoined.DefaultIfEmpty()
+
+                        //join pi in _context.ProductImages
+                        //.Where(x=> x.IsDefault == true)
+                        //on p.Id equals pi.ProductId
+
+                        join c in _context.Categories
+                        on pic.CategoryId equals c.Id
+                        into cJoined
+                        from c in cJoined.DefaultIfEmpty()
+
+                        where pt.LanguageId == languageId
+                        select new { p, pt, pic };
+
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Select(x => new ProductVm()
+                            {
+                                Id = x.p.Id,
+                                Name = x.pt.Name,
+                                DateCreated = x.p.DateCreated,
+                                Description = x.pt.Description,
+                                Details = x.pt.Description,
+                                LanguageId = x.pt.LanguageId,
+                                OriginalPrice = x.p.OriginalPrice,
+                                Price = x.p.Price,
+                                SeoAlias = x.pt.SeoAlias,
+                                SeoDescription = x.pt.SeoDescription,
+                                SeoTitle = x.pt.SeoTitle,
+                                Stock = x.p.Stock,
+                                ViewCount = x.p.ViewCount,
+                                //ThumbnailImage = x.pi.ImagePath
+                            }).ToListAsync();
+
+            return data;
+        }
     }
 }
