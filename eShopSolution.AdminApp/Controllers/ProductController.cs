@@ -64,15 +64,54 @@ namespace eShopSolution.AdminApp.Controllers
         public async Task<IActionResult> Create([FromForm] ProductCreateRequestDto request)
         {
             if (!ModelState.IsValid)
-                return View();
+                return View(request);
+
             var result = await _productApiClient.CreateProduct(request);
             if (result)
             {
-                TempData["result"] = "Thêm mới sản phẩm thành công!";
+                TempData["result"] = "Thêm mới sản phẩm thành công";
                 return RedirectToAction("Index");
             }
+
             ModelState.AddModelError("", "Thêm sản phẩm thất bại");
-            return View();
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var product = await _productApiClient.GetById(id, languageId);
+            var editVm = new ProductUpdateRequestDto()
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Details = product.Details,
+                Name = product.Name,
+                SeoAlias = product.SeoAlias,
+                SeoDescription = product.SeoDescription,
+                SeoTitle = product.SeoTitle
+            };
+            return View(editVm);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit([FromForm] ProductUpdateRequestDto request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");
+            return View(request);
         }
 
 
