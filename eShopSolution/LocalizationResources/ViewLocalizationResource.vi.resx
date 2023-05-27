@@ -119,7 +119,11 @@
   </resheader>
   <data name="Add to" xml:space="preserve">
     <value>Thêm vào</value>
-    <comment>/Home/Index</comment>
+    <comment>Common</comment>
+  </data>
+  <data name="available products" xml:space="preserve">
+    <value>Sản phẩm có sẵn</value>
+    <comment>/Product/Category</comment>
   </data>
   <data name="categoryUrl" xml:space="preserve">
     <value>danh-muc</value>
@@ -135,10 +139,15 @@
   </data>
   <data name="English" xml:space="preserve">
     <value>Tiếng Anh</value>
+    <comment>Layouts</comment>
   </data>
   <data name="Featured Products" xml:space="preserve">
     <value>Sản phẩm nổi bật</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang chủ</value>
+    <comment>Common</comment>
   </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Sản phẩm mới nhất</value>
@@ -148,8 +157,29 @@
     <value>Đăng nhập</value>
     <comment>Layouts</comment>
   </data>
+  <data name="More Details" xml:space="preserve">
+    <value>Xem chi tiết</value>
+    <comment>Product/Detail</comment>
+  </data>
+  <data name="New | Available" xml:space="preserve">
+    <value>Có sẵn</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Trang</value>
+    <comment>Common</comment>
+  </data>
   <data name="productUrl" xml:space="preserve">
     <value>san-pham</value>
+    <comment>Layouts</comment>
+  </data>
+  <data name="Related Products" xml:space="preserve">
+    <value>Sản phẩm liên quan</value>
+    <comment>Product/Detail</comment>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>Sort By</value>
+    <comment>/Product/Category</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Khuyến mãi</value>
@@ -157,9 +187,14 @@
   </data>
   <data name="Vietnamese" xml:space="preserve">
     <value>Tiếng Việt</value>
+    <comment>Layouts</comment>
   </data>
   <data name="VIEW" xml:space="preserve">
     <value>Xem</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="View details" xml:space="preserve">
+    <value>Xem chi tiết</value>
+    <comment>/Product/Category</comment>
   </data>
 </root>

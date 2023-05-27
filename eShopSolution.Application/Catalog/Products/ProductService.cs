@@ -155,8 +155,13 @@ namespace eShopSolution.Application.Catalog.Products
                         into cJoined
                         from c in cJoined.DefaultIfEmpty()
 
-                        where pt.LanguageId == request.LanguageId
-                        select new { p, pt, pic };
+                        join pi in _context.ProductImages 
+                        on p.Id equals pi.ProductId
+                        into piJoined
+                        from pi in piJoined.DefaultIfEmpty()
+
+                        where pt.LanguageId == request.LanguageId && pi.IsDefault == true
+                        select new { p, pt, pic, pi };
 
             //filter
             if (!string.IsNullOrWhiteSpace(request.Keyword))
@@ -187,6 +192,7 @@ namespace eShopSolution.Application.Catalog.Products
                                 SeoTitle = x.pt.SeoTitle,
                                 Stock = x.p.Stock,
                                 ViewCount = x.p.ViewCount,
+                                ThumbnailImage = x.pi.ImagePath
                             }).ToListAsync();
 
             var PagedResult = new PagedResultDto<ProductVm>()
