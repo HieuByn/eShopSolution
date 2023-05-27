@@ -13,7 +13,6 @@ namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -59,6 +58,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Creat([FromForm] ProductCreateRequestDto request)
         {
             if(!ModelState.IsValid)
@@ -76,6 +76,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         [HttpPut("{productId}")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequestDto request)
         {
             if (!ModelState.IsValid)
@@ -91,6 +92,7 @@ namespace eShopSolution.BackendApi.Controllers
 
 
         [HttpDelete("{productId}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _productService.Delete(productId);
@@ -101,6 +103,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpPatch("{productId}/{newPrice}")]
+        [Authorize]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
@@ -111,6 +114,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpPatch("{productId}/{addedQuantity}")]
+        [Authorize]
         public async Task<IActionResult> UpdateStock(int productId, int addedQuantity)
         {
             var isSuccessful = await _productService.UpdateStock(productId, addedQuantity);
