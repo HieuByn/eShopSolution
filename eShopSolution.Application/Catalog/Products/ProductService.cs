@@ -21,6 +21,8 @@ namespace eShopSolution.Application.Catalog.Products
     {
         private readonly EShopDbcontext _context;
         private readonly IStorageService _storageService;
+        private const string USER_CONTENT_FOLDER_NAME = "user-content";
+
         public ProductService(EShopDbcontext context, IStorageService storageService)
         {
             _context = context;
@@ -235,7 +237,7 @@ namespace eShopSolution.Application.Catalog.Products
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
                 Categories = categories,
-                //ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
+                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };
             return productViewModel;
         }
@@ -349,7 +351,7 @@ namespace eShopSolution.Application.Catalog.Products
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return fileName;
+            return "/" + USER_CONTENT_FOLDER_NAME + "/" +  fileName;
         }
 
         public async Task<PagedResultDto<ProductVm>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
