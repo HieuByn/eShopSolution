@@ -1,4 +1,5 @@
 ﻿using eShopSolution.ViewModels.Catalog.Categories;
+using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,13 @@ namespace eShopSolution.ApiIntergration
         public async Task<CategoryVm> GetById(string languageId, int id)
         {
             return await GetAsync<CategoryVm>($"/api/categories/{id}/{languageId}");
+        }
+
+        public async Task<PagedResultDto<CategoryVm>> GetPagings(GetManageProductPagingRequest request)
+        {
+            return await GetAsync<PagedResultDto<CategoryVm>>($"/api/categories/paging?pageIndex=" +
+                $"{request.PageIndex}&pageSize={request.PageSize}" +
+                $"&keyword={request.Keyword}&languageId={request.LanguageId}");
         }
     }
 }

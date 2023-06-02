@@ -1,4 +1,6 @@
 ﻿using eShopSolution.ViewModels.Catalog.Categories;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +12,6 @@ namespace eShopSolution.Application.Catalog.Categories
     {
         Task<List<CategoryVm>> GetAll(string languageId);
         Task<CategoryVm> GetById(string languageId, int id);
+        Task<PagedResultDto<CategoryVm>> GetAllPaging(GetManageProductPagingRequest request);
     }
 }
